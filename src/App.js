@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+//import logo from './logo.svg';
+//import './App.css';
+import React, {useState} from 'react';
+import Overview from './components/Overview.js';
+//import uniqid from "uniqid";
 
-function App() {
+function App(){
+  const [task, setTask] = useState("");
+  const [tasks, setMessageList] = useState([]);
+  
+  function setTaskHandler(e){
+    setTask(e.target.value)
+  }
+
+  function addToTasksHandler(e){
+    setMessageList([
+      ...tasks,
+      {
+        id: tasks.length + 1, // Use the current size as ID (needed to iterate the list later)
+        task: task
+      }
+    ]);
+    setTask(""); //clear the input box
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        type="text"
+        value={task}
+        placeholder="Enter a message"
+        onChange={setTaskHandler}
+      />
+      <input
+        type="button"
+        value="Add"
+        onClick={addToTasksHandler}
+      />
+      <Overview tasks ={tasks}/>
+      {/* <ul>
+        {tasks.map(m => (
+          <li key={m.id}>{m.task}</li>
+        ))}
+      </ul> */}
+
     </div>
   );
-}
-
-export default App;
+};
+export default App
